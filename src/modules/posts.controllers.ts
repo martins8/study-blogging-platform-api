@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { PostPostsRequestBody } from "./posts.models.js";
+import { createPostService } from "./posts.services.js";
 
 export async function createPostController(
 	request: FastifyRequest<{ Body: PostPostsRequestBody }>,
@@ -7,7 +8,14 @@ export async function createPostController(
 ) {
 	try {
 		const { title, content, category, tags } = request.body;
-		reply.status(201).send("Post created successfully");
+		const result = await createPostService({
+			title,
+			content,
+			category,
+			tags,
+		});
+		console.log("Post created successfully:", result);
+		reply.status(201).send(result);
 	} catch (error) {
 		console.log("Error in createPostController:", error);
 		reply
