@@ -11,7 +11,9 @@ export async function createTables() {
       title TEXT NOT NULL,
       content TEXT NOT NULL,
       category TEXT NOT NULL,
-      tags TEXT NOT NULL
+      tags TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
     )
   `);
 }
