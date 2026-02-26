@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import Fastify from "fastify";
-import { postsRoutes } from "./posts.routes.js";
+import { postsRoutes } from "./modules/posts.routes.js";
 import { loginfo } from "./utils/index.js";
 
 const server: FastifyInstance = Fastify({});
