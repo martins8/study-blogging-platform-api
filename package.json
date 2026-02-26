@@ -9,7 +9,7 @@
 		"start": "node dist/server.js",
 		"lint": "biome check .",
 		"format": "biome format .",
-		"test": "vitest"
+		"test": "NODE_ENV=test tsx src/db/migrate.ts && NODE_ENV=test vitest"
 	},
 	"keywords": [],
 	"author": "",
@@ -24,6 +24,7 @@
 		"vitest": "^4.0.18"
 	},
 	"dependencies": {
+		"@libsql/client": "^0.17.0",
 		"fastify": "^5.7.4"
 	}
 }
