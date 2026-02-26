@@ -24,10 +24,12 @@ describe("Database connection", () => {
 		const content = "This is a test post.";
 		const category = "Testing";
 		const tags = JSON.stringify(["test", "post"]);
+		const createdAt = new Date().toISOString();
+		const updatedAt = new Date().toISOString();
 
 		await client.execute(
-			"INSERT INTO posts (title, content, category, tags) VALUES (?, ?, ?, ?)",
-			[title, content, category, tags],
+			"INSERT INTO posts (title, content, category, tags, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+			[title, content, category, tags, createdAt, updatedAt],
 		);
 
 		const result = await client.execute("SELECT * FROM posts WHERE title = ?", [
@@ -40,5 +42,7 @@ describe("Database connection", () => {
 		expect(result.rows[0][2]).toBe(content);
 		expect(result.rows[0][3]).toBe(category);
 		expect(result.rows[0][4]).toBe(tags);
+		expect(result.rows[0][5]).toBeDefined();
+		expect(result.rows[0][6]).toBeDefined();
 	});
 });
