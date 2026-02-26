@@ -1,5 +1,5 @@
 import type { FastifyInstance, RouteHandler } from "fastify";
-import { createPostController } from "./posts.controller.js";
+import { createPostController } from "./posts.controllers.js";
 import { postPostsSchema } from "./posts.schemas.js";
 
 export async function postsRoutes(server: FastifyInstance) {
