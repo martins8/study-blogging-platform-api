@@ -1,6 +1,10 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { PostsRequestBody } from "./posts.models.js";
-import { createPostService, updatePostService } from "./posts.services.js";
+import {
+	createPostService,
+	deletePostService,
+	updatePostService,
+} from "./posts.services.js";
 
 export async function createPostController(
 	request: FastifyRequest<{ Body: PostsRequestBody }>,
@@ -48,6 +52,31 @@ export async function putPostController(
 		reply
 			.status(500)
 			.send({ error: "An error occurred while updating the post." });
+		return;
+	}
+}
+
+export async function deletePostController(
+	request: FastifyRequest<{ Params: { id: string } }>,
+	reply: FastifyReply,
+) {
+	try {
+		const { id } = request.params;
+		const result = await deletePostService(id);
+
+		if (!result) {
+			console.log("Post not found for deletion:", id);
+			reply.status(404).send({ error: "Post not found." });
+			return;
+		}
+
+		console.log("Post deleted successfully:", id);
+		reply.status(204).send({ message: "No Content" });
+	} catch (error) {
+		console.log("Error in deletePostController:", error);
+		reply
+			.status(500)
+			.send({ error: "An error occurred while deleting the post." });
 		return;
 	}
 }

@@ -89,3 +89,30 @@ export const putPostsSchema = {
 		},
 	},
 };
+
+export const deletePostSchema = {
+	schema: {
+		params: {
+			type: "object",
+			properties: {
+				id: { type: "string" },
+			},
+			required: ["id"],
+			additionalProperties: false,
+		},
+		response: {
+			204: {
+				type: "object",
+				properties: {
+					message: { type: "string" },
+				},
+			},
+			404: {
+				type: "object",
+				properties: {
+					error: { type: "string" },
+				},
+			},
+		},
+	},
+};

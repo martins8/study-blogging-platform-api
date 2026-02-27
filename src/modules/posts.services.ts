@@ -60,3 +60,19 @@ export async function updatePostService(
 		throw new Error("An error occurred while updating the post.");
 	}
 }
+
+export async function deletePostService(id: string): Promise<boolean> {
+	try {
+		const result = await client.execute({
+			sql: "DELETE FROM posts WHERE id = ? RETURNING id",
+			args: [id],
+		});
+		if (result.rows.length === 0) {
+			return false;
+		}
+		return true;
+	} catch (error) {
+		console.log("Error in deletePostService:", error);
+		throw new Error("An error occurred while deleting the post.");
+	}
+}
