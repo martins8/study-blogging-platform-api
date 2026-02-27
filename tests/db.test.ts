@@ -24,8 +24,8 @@ describe("Database connection", () => {
 		const content = "This is a test post.";
 		const category = "Testing";
 		const tags = JSON.stringify(["test", "post"]);
-		const createdAt = new Date().toISOString();
-		const updatedAt = new Date().toISOString();
+		const createdAt = new Date().toLocaleDateString("en-CA"); // "YYYY-MM-DD"
+		const updatedAt = new Date().toLocaleDateString("en-CA"); // "YYYY-MM-DD"
 
 		await client.execute(
 			"INSERT INTO posts (title, content, category, tags, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
