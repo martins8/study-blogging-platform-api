@@ -1,9 +1,9 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { PostPostsRequestBody } from "./posts.models.js";
+import type { PostsRequestBody } from "./posts.models.js";
 import { createPostService } from "./posts.services.js";
 
 export async function createPostController(
-	request: FastifyRequest<{ Body: PostPostsRequestBody }>,
+	request: FastifyRequest<{ Body: PostsRequestBody }>,
 	reply: FastifyReply,
 ) {
 	try {

@@ -1,11 +1,8 @@
 import type { Row } from "@libsql/client/web";
 import client from "@/db/index.js";
-import type {
-	PostPostsRequestBody,
-	PostPostsResponse,
-} from "./posts.models.js";
+import type { PostsRequestBody, PostsResponse } from "./posts.models.js";
 
-export function rowToPost(row: Row): PostPostsResponse {
+export function rowToPost(row: Row): PostsResponse {
 	return {
 		id: String(row.id),
 		title: String(row.title),
@@ -18,8 +15,8 @@ export function rowToPost(row: Row): PostPostsResponse {
 }
 
 export async function createPostService(
-	post: PostPostsRequestBody,
-): Promise<PostPostsResponse> {
+	post: PostsRequestBody,
+): Promise<PostsResponse> {
 	const { title, content, category, tags } = post;
 	const [createdAt, updatedAt] = [
 		new Date().toLocaleDateString("en-CA"), // "YYYY-MM-DD"
@@ -38,7 +35,7 @@ export async function createPostService(
 			],
 		});
 		const response = rowToPost(result.rows[0]);
-		return response as PostPostsResponse;
+		return response as PostsResponse;
 	} catch (error) {
 		console.log("Error in createPostService:", error);
 		throw new Error("An error occurred while creating the post.");
