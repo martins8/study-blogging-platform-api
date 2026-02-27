@@ -41,3 +41,22 @@ export async function createPostService(
 		throw new Error("An error occurred while creating the post.");
 	}
 }
+
+export async function updatePostService(
+	id: string,
+	post: PostsRequestBody,
+): Promise<PostsResponse> {
+	const { title, content, category, tags } = post;
+	const updatedAt = new Date().toLocaleDateString("en-CA"); // "YYYY-MM-DD"
+	try {
+		const result = await client.execute({
+			sql: "UPDATE posts SET title = ?, content = ?, category = ?, tags = json(?), updated_at = ? WHERE id = ? RETURNING *",
+			args: [title, content, category, JSON.stringify(tags), updatedAt, id],
+		});
+		const response = rowToPost(result.rows[0]);
+		return response as PostsResponse;
+	} catch (error) {
+		console.log("Error in updatePostService:", error);
+		throw new Error("An error occurred while updating the post.");
+	}
+}
