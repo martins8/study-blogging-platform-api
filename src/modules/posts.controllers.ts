@@ -3,6 +3,7 @@ import type { PostsRequestBody } from "./posts.models.js";
 import {
 	createPostService,
 	deletePostService,
+	getAllPostsService,
 	getPostByIdService,
 	updatePostService,
 } from "./posts.services.js";
@@ -99,10 +100,27 @@ export async function getPostByIdController(
 		console.log("Post retrieved successfully:", result);
 		reply.status(200).send(result);
 	} catch (error) {
-		console.log("Error in getPostController:", error);
+		console.log("Error in getPostByIdController:", error);
 		reply
 			.status(500)
 			.send({ error: "An error occurred while retrieving the post." });
+		return;
+	}
+}
+
+export async function getAllPostsController(
+	_request: FastifyRequest,
+	reply: FastifyReply,
+) {
+	try {
+		const result = await getAllPostsService();
+		console.log("Posts retrieved successfully:", result);
+		reply.status(200).send(result);
+	} catch (error) {
+		console.log("Error in getAllPostsController:", error);
+		reply
+			.status(500)
+			.send({ error: "An error occurred while retrieving the posts." });
 		return;
 	}
 }

@@ -2,11 +2,13 @@ import type { FastifyInstance, RouteHandler } from "fastify";
 import {
 	createPostController,
 	deletePostController,
+	getAllPostsController,
 	getPostByIdController,
 	putPostController,
 } from "./posts.controllers.js";
 import {
 	deletePostSchema,
+	getAllPostsSchema,
 	getPostByIdSchema,
 	postPostsSchema,
 	putPostsSchema,
@@ -27,5 +29,11 @@ export async function postsRoutes(server: FastifyInstance) {
 		"/posts/:id",
 		getPostByIdSchema,
 		getPostByIdController as RouteHandler,
+	);
+
+	server.get(
+		"/posts",
+		getAllPostsSchema,
+		getAllPostsController as RouteHandler,
 	);
 }

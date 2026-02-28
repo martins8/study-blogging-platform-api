@@ -152,3 +152,28 @@ export const getPostByIdSchema = {
 		},
 	},
 };
+
+export const getAllPostsSchema = {
+	schema: {
+		response: {
+			200: {
+				type: "array",
+				items: {
+					type: "object",
+					properties: {
+						id: { type: "string" },
+						title: { type: "string" },
+						content: { type: "string" },
+						category: { type: "string" },
+						tags: {
+							type: "array",
+							items: { type: "string" },
+						},
+						createdAt: { type: "string" },
+						updatedAt: { type: "string" },
+					},
+				},
+			},
+		},
+	},
+};

@@ -95,3 +95,16 @@ export async function getPostByIdService(
 		throw new Error("An error occurred while retrieving the post.");
 	}
 }
+
+export async function getAllPostsService(): Promise<PostsResponse[]> {
+	try {
+		const result = await client.execute({
+			sql: "SELECT * FROM posts",
+		});
+		const response = result.rows.map(rowToPost);
+		return response as PostsResponse[];
+	} catch (error) {
+		console.log("Error in getAllPostsService:", error);
+		throw new Error("An error occurred while retrieving the posts.");
+	}
+}
