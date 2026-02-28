@@ -161,12 +161,41 @@ describe("GET /posts/:id endpoint", () => {
 	});
 
 	it("should return a 200 status code when trying to retrieve an existing post", async () => {
-		const existingPostId = "existing-post-id";
-		const getResponse = await fetch(`${BASE_URL}/posts/${existingPostId}`, {
+		const getResponse = await fetch(`${BASE_URL}/posts/${1}`, {
 			method: "GET",
 		});
 		expect(getResponse.status).toBe(200);
 		const responseData = await getResponse.json();
-		expect(responseData).toEqual({ error: "Post not found." });
+		expect(responseData).toMatchObject({
+			id: expect.any(String),
+			title: expect.any(String),
+			content: expect.any(String),
+			category: expect.any(String),
+			tags: expect.any(Array),
+			createdAt: expect.any(String),
+			updatedAt: expect.any(String),
+		});
+	});
+});
+
+describe("GET /posts endpoint", () => {
+	it("should return a 200 status code and an array of posts", async () => {
+		const response = await fetch(`${BASE_URL}/posts`, {
+			method: "GET",
+		});
+		expect(response.status).toBe(200);
+		const responseData = await response.json();
+		expect(Array.isArray(responseData)).toBe(true);
+		if (responseData.length > 0) {
+			expect(responseData[0]).toMatchObject({
+				id: expect.any(String),
+				title: expect.any(String),
+				content: expect.any(String),
+				category: expect.any(String),
+				tags: expect.any(Array),
+				createdAt: expect.any(String),
+				updatedAt: expect.any(String),
+			});
+		}
 	});
 });
