@@ -1,18 +1,6 @@
-import type { Row } from "@libsql/client/web";
 import client from "@/db/index.js";
+import { rowToPost } from "@/utils/index.js";
 import type { PostsRequestBody, PostsResponse } from "./posts.models.js";
-
-export function rowToPost(row: Row): PostsResponse {
-	return {
-		id: String(row.id),
-		title: String(row.title),
-		content: String(row.content),
-		category: String(row.category),
-		tags: JSON.parse(String(row.tags)),
-		createdAt: String(row.created_at),
-		updatedAt: String(row.updated_at),
-	};
-}
 
 export async function createPostService(
 	post: PostsRequestBody,
