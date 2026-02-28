@@ -76,3 +76,22 @@ export async function deletePostService(id: string): Promise<boolean> {
 		throw new Error("An error occurred while deleting the post.");
 	}
 }
+
+export async function getPostByIdService(
+	id: string,
+): Promise<PostsResponse | null> {
+	try {
+		const result = await client.execute({
+			sql: "SELECT * FROM posts WHERE id = ?",
+			args: [id],
+		});
+		if (result.rows.length === 0) {
+			return null;
+		}
+		const response = rowToPost(result.rows[0]);
+		return response as PostsResponse;
+	} catch (error) {
+		console.log("Error in getPostByIdService:", error);
+		throw new Error("An error occurred while retrieving the post.");
+	}
+}

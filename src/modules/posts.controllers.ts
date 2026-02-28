@@ -3,6 +3,7 @@ import type { PostsRequestBody } from "./posts.models.js";
 import {
 	createPostService,
 	deletePostService,
+	getPostByIdService,
 	updatePostService,
 } from "./posts.services.js";
 
@@ -77,6 +78,31 @@ export async function deletePostController(
 		reply
 			.status(500)
 			.send({ error: "An error occurred while deleting the post." });
+		return;
+	}
+}
+
+export async function getPostByIdController(
+	request: FastifyRequest<{ Params: { id: string } }>,
+	reply: FastifyReply,
+) {
+	try {
+		const { id } = request.params;
+		const result = await getPostByIdService(id);
+
+		if (!result) {
+			console.log("Post not found:", id);
+			reply.status(404).send({ error: "Post not found." });
+			return;
+		}
+
+		console.log("Post retrieved successfully:", result);
+		reply.status(200).send(result);
+	} catch (error) {
+		console.log("Error in getPostController:", error);
+		reply
+			.status(500)
+			.send({ error: "An error occurred while retrieving the post." });
 		return;
 	}
 }
