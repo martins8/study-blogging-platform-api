@@ -184,7 +184,7 @@ describe("GET /posts endpoint", () => {
 			method: "GET",
 		});
 		expect(response.status).toBe(200);
-		const responseData = await response.json();
+		const responseData = (await response.json()) as PostsResponse[];
 		expect(Array.isArray(responseData)).toBe(true);
 		if (responseData.length > 0) {
 			expect(responseData[0]).toMatchObject({
