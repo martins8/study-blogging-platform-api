@@ -148,3 +148,25 @@ describe("DELETE /posts/:id endpoint", () => {
 		expect(responseData).toEqual({ error: "Post not found." });
 	});
 });
+
+describe("GET /posts/:id endpoint", () => {
+	it("should return a 404 status code when trying to retrieve a non-existent post", async () => {
+		const nonExistentPostId = "non-existent-id";
+		const getResponse = await fetch(`${BASE_URL}/posts/${nonExistentPostId}`, {
+			method: "GET",
+		});
+		expect(getResponse.status).toBe(404);
+		const responseData = await getResponse.json();
+		expect(responseData).toEqual({ error: "Post not found." });
+	});
+
+	it("should return a 200 status code when trying to retrieve an existing post", async () => {
+		const existingPostId = "existing-post-id";
+		const getResponse = await fetch(`${BASE_URL}/posts/${existingPostId}`, {
+			method: "GET",
+		});
+		expect(getResponse.status).toBe(200);
+		const responseData = await getResponse.json();
+		expect(responseData).toEqual({ error: "Post not found." });
+	});
+});
